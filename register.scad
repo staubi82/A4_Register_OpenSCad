@@ -30,7 +30,7 @@ tab_r = 3;
 tab_round_inner = false;
 
 // Beschriftung (ein Feld für Tab + Titel)
-label_text  = "Volksbank"; // ⇦ einmal setzen
+label_text  = "Dokumente"; // ⇦ einmal setzen
 text_rotation_deg = 90;         // Quer auf dem Tab (90 = seitlich lesbar)
 
 // Schriftarten
