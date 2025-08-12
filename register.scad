@@ -140,18 +140,34 @@ module tab_shape(idx=register_index){
     if (tab_r <= 0){
       square([tab_w, tab_h]);
     } else if (tab_side == "right"){
-      // Rechter Tab: nur die äußeren (rechts) runden
-      union(){
+      if (tab_round_inner){
+        // alle vier Ecken rund
         roundrect_wh(tab_w, tab_h, tab_r);
-        if (!tab_round_inner)
-          translate([-tab_r, 0]) square([tab_r, tab_h]); // innere Kante gerade halten
+      } else {
+        // nur die rechten Außenecken rund
+        union(){
+          // Grundkörper links + Mittelsteg
+          square([tab_w - tab_r, tab_h]);
+          translate([tab_w - tab_r, tab_r]) square([tab_r, tab_h - 2*tab_r]);
+          // Viertelkreise oben rechts & unten rechts
+          translate([tab_w - tab_r, tab_h - tab_r]) circle(r=tab_r);
+          translate([tab_w - tab_r, tab_r]) circle(r=tab_r);
+        }
       }
-    } else {
-      // Oberer Tab: nur die äußeren (oben) runden
-      union(){
+    } else { // tab_side == "top"
+      if (tab_round_inner){
+        // alle vier Ecken rund
         roundrect_wh(tab_w, tab_h, tab_r);
-        if (!tab_round_inner)
-          translate([0, -tab_r]) square([tab_w, tab_r]); // innere Kante gerade halten
+      } else {
+        // nur die oberen Außenecken rund
+        union(){
+          // Grundkörper unten + Mittelsteg
+          square([tab_w, tab_h - tab_r]);
+          translate([tab_r, tab_h - tab_r]) square([tab_w - 2*tab_r, tab_r]);
+          // Viertelkreise links oben & rechts oben
+          translate([tab_r, tab_h - tab_r]) circle(r=tab_r);
+          translate([tab_w - tab_r, tab_h - tab_r]) circle(r=tab_r);
+        }
       }
     }
   }
